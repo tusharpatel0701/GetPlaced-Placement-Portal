@@ -45,7 +45,7 @@ The platform enables:
 
 ## Database
 
-* SQLite (Can be migrated to MySQL/PostgreSQL)
+* MySQL
 
 ---
 
@@ -323,7 +323,6 @@ npm run dev
 
 # Future Improvements
 
-* PostgreSQL/MySQL migration
 * Real-time notifications
 * AI-based resume screening
 * Interview scheduling system
@@ -340,12 +339,6 @@ Approximately **30% AI assistance** was used for:
 * Error fixing
 * Frontend styling
 * UI improvements
-
----
-
-# License
-
-This project is developed for educational purposes under the IIT Madras MAD 2 project submission.
 
 ---
 
