@@ -1,0 +1,11 @@
+Steps to Run the project -- 
+
+1. Create virtual environment -- python -m venv myenv
+2. Activate myenv -- myenv\Scripts\activate
+3. Install dependencies -- pip install -r "requirements.txt"
+4. frontend -- npm install
+5. npm install bootstrap
+6. Backend -- python app.py
+7. Backend -- celery -A app.celery worker --loglevel=info --pool=solo
+8. Backend -- celery -A app.celery beat --loglevel=info
+9. Frontend -- npm run dev
