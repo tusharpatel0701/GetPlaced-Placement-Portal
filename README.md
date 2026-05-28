@@ -341,25 +341,3 @@ Approximately **30% AI assistance** was used for:
 * UI improvements
 
 ---
-
-# Screenshots
-
-Add your project screenshots here.
-
-Example:
-
-```md
-![Dashboard](screenshots/dashboard.png)
-```
-
----
-
-# Video Demo
-
-Add your project demo video link here.
-
-Example:
-
-```md
-https://youtube.com/your-demo-link
-```
