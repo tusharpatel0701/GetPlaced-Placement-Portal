@@ -49,7 +49,7 @@ async function blacklistStudent(id) {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:5000/api/admin/user/${id}/deactivate`, {
+    const res = await fetch(`${API_URL}/api/admin/user/${id}/deactivate`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

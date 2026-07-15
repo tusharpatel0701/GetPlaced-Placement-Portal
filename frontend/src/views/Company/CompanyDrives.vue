@@ -50,7 +50,7 @@ async function fetchDrives() {
   error.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/company/drives/${companyId}`, {
+    const res = await fetch(`${API_URL}/api/company/drives/${companyId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error();
@@ -77,7 +77,7 @@ async function createDrive() {
   submitting.value = true;
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/company/create-drive", {
+    const res = await fetch(`${API_URL}/api/company/create-drive`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

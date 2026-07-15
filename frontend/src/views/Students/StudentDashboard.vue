@@ -54,7 +54,7 @@ async function exportCSV() {
   exporting.value = true;
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/student/${studentId}/export-csv`, {
+    const res = await fetch(`${API_URL}/api/student/${studentId}/export-csv`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` }
     });

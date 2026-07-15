@@ -44,7 +44,7 @@ async function handleAction(companyId, action) {
     const token = localStorage.getItem("token");
 
     // ✅ Matches your backend: AdminCompanyApproval at /api/admin/company/<company_id>
-    const res = await fetch(`http://localhost:5000/api/admin/company/${companyId}`, {
+    const res = await fetch(`${API_URL}/api/admin/company/${companyId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

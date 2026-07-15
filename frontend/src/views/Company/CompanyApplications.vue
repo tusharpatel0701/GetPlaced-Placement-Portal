@@ -48,7 +48,7 @@ async function fetchApplicants(driveId) {
   error.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/company/applicants/${driveId}`, {
+    const res = await fetch(`${API_URL}/api/company/applicants/${driveId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error();
@@ -68,7 +68,7 @@ async function updateStatus(applicationId, status) {
 
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/company/application/${applicationId}`, {
+    const res = await fetch(`${API_URL}/api/company/application/${applicationId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -245,7 +245,7 @@ const summary = computed(() => ({
                   <td>
                     <a
                       v-if="app.resume_path"
-                      :href="`http://localhost:5000/${app.resume_path}`"
+                      :href="`${API_URL}/${app.resume_path}`"
                       target="_blank"
                       class="btn btn-sm btn-outline-primary"
                     >

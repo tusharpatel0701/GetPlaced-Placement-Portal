@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRouter();
 const student = ref(null);
 const loading = ref(true);
@@ -57,7 +58,7 @@ async function saveProfile() {
   error.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/student/profile/${studentId}`, {
+    const res = await fetch(`${API_URL}/api/student/profile/${studentId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +99,7 @@ async function uploadResume(event) {
     const formData = new FormData();
     formData.append("resume", file);
 
-    const res = await fetch(`http://localhost:5000/api/student/resume/${studentId}`, {
+    const res = await fetch(`${API_URL}/api/student/resume/${studentId}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

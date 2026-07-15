@@ -42,7 +42,7 @@ async function handleAction(driveId, action) {
   actionError.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/admin/drive/${driveId}`, {
+    const res = await fetch(`${API_URL}/api/admin/drive/${driveId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

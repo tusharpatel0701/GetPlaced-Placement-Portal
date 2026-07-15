@@ -62,7 +62,7 @@ async function applyToDrive(driveId) {
   applySuccess.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/student/apply/${driveId}`, {
+    const res = await fetch(`${API_URL}/api/student/apply/${driveId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
