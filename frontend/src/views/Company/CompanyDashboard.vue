@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
 const company = ref(null);
 const drives = ref([]);
@@ -27,8 +28,8 @@ async function fetchData() {
     const headers = { Authorization: `Bearer ${token}` };
 
     const [profileRes, drivesRes] = await Promise.all([
-      fetch(`http://localhost:5000/api/company/profile/${companyId}`, { headers }),
-      fetch(`http://localhost:5000/api/company/drives/${companyId}`, { headers }),
+      fetch(`${API_URL}/api/company/profile/${companyId}`, { headers }),
+      fetch(`${API_URL}/api/company/drives/${companyId}`, { headers }),
     ]);
 
     if (profileRes.ok) company.value = await profileRes.json();

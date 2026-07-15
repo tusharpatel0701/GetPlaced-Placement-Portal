@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRouter();
 const applications = ref([]);
 const loading = ref(true);
@@ -23,7 +25,7 @@ async function fetchApplications() {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/admin/applications", {
+    const res = await fetch(`${API_URL}/api/admin/applications`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

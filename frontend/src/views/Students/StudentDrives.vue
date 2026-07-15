@@ -2,6 +2,8 @@
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRouter();
 const drives = ref([]);
 const applications = ref([]);
@@ -28,7 +30,7 @@ async function fetchDrives() {
   loading.value = true;
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/student/drives", {
+    const res = await fetch(`${API_URL}/api/student/drives`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error();
@@ -43,7 +45,7 @@ async function fetchDrives() {
 async function fetchApplications() {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/student/applications/${studentId}`, {
+    const res = await fetch(`${API_URL}/api/student/applications/${studentId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (res.ok) applications.value = await res.json();

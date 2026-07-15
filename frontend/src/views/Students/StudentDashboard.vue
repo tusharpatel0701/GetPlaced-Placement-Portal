@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRouter();
 const student = ref(null);
 const applications = ref([]);
@@ -24,8 +26,8 @@ async function fetchData() {
     const headers = { Authorization: `Bearer ${token}` };
 
     const [profileRes, appsRes] = await Promise.all([
-      fetch(`http://localhost:5000/api/student/profile/${studentId}`, { headers }),
-      fetch(`http://localhost:5000/api/student/applications/${studentId}`, { headers }),
+      fetch(`${API_URL}/api/student/profile/${studentId}`, { headers }),
+      fetch(`${API_URL}/api/student/applications/${studentId}`, { headers }),
     ]);
 
     if (profileRes.ok) student.value = await profileRes.json();

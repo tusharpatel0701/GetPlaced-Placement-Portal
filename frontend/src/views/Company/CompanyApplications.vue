@@ -5,6 +5,8 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const drives = ref([]);
 const applicants = ref([]);
 const selectedDriveId = ref(route.query.drive_id || "");
@@ -27,7 +29,7 @@ async function fetchDrives() {
   loadingDrives.value = true;
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/company/drives/${companyId}`, {
+    const res = await fetch(`${API_URL}/api/company/drives/${companyId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error();

@@ -13,6 +13,8 @@ import {
 const router = useRouter();
 const route = useRoute();
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // -----------------------------------
 // State
 // -----------------------------------
@@ -52,7 +54,7 @@ async function triggerReminder() {
     const token = localStorage.getItem("token");
 
     const res = await fetch(
-      "http://localhost:5000/api/admin/trigger-reminder",
+      `${API_URL}/api/admin/trigger-reminder`,
       {
         method: "POST",
 

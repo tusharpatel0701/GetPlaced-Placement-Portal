@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
 const drives = ref([]);
 const loading = ref(true);
@@ -23,7 +24,7 @@ async function fetchDrives() {
   error.value = "";
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/admin/drives", {
+    const res = await fetch(`${API_URL}/api/admin/drives`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("Failed to fetch");

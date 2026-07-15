@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const API_URL = import.meta.env.VITE_API_URL;
 
 const stats = ref({ total_students: 0, total_companies: 0, total_drives: 0 });
 const loading = ref(true);
@@ -17,7 +18,7 @@ onMounted(async () => {
 
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/admin/dashboard", {
+    const res = await fetch(`${API_URL}/api/admin/dashboard`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

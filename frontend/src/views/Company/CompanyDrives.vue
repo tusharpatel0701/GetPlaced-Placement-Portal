@@ -2,6 +2,8 @@
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const router = useRouter();
 const drives = ref([]);
 const company = ref(null);
@@ -36,7 +38,7 @@ onMounted(async () => {
 async function fetchCompany() {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/company/profile/${companyId}`, {
+    const res = await fetch(`${API_URL}/api/company/profile/${companyId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (res.ok) company.value = await res.json();
