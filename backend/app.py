@@ -9,7 +9,7 @@ from extension import db, mail, cache
 from flask_cors import CORS
 from extension import db
 from models import *
-from config import LocalDevelopmentConfig
+from config import LocalDevelopmentConfig, ProductionConfig
 from flask_security import Security, SQLAlchemyUserDatastore
 from models import User, Role
 from resources import auth_bp, api_bp
@@ -19,7 +19,7 @@ def create_app():
     app = Flask(__name__)
 
     # ✅ Load config
-    app.config.from_object(LocalDevelopmentConfig)
+    app.config.from_object(ProductionConfig)
 
     # ✅ Init DB
     db.init_app(app)
@@ -27,7 +27,11 @@ def create_app():
     #init mail
     mail.init_app(app)  
 
-    cache.init_app(app)
+    print("CACHE TYPE:", app.config.get("CACHE_TYPE"))
+    print("CACHE REDIS URL:", app.config.get("CACHE_REDIS_URL"))
+    cache.init_app(app, config={
+    "CACHE_TYPE": "NullCache"
+    })
 
     # ✅ Setup Flask-Security
     datastore = SQLAlchemyUserDatastore(db, User, Role)

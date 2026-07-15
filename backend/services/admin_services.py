@@ -197,75 +197,74 @@
 
 
 
-from models import User, Student, Company, PlacementDrive, Application, db
-from extension import cache                       
+from models import User, Student, Company, PlacementDrive, Application, db                      
 
 
 # DASHBOARD STATS
 def get_dashboard_stats():
-    data = cache.get("admin_dashboard_stats")
-    if data is None:                                
-        data = {
+    # data = cache.get("admin_dashboard_stats")
+    # if data is None:                                
+    data = {
             "total_students": Student.query.count(),
             "total_companies": Company.query.count(),
             "total_drives": PlacementDrive.query.count()
         }
-        cache.set("admin_dashboard_stats", data, timeout=300)  
+        # cache.set("admin_dashboard_stats", data, timeout=300)  
     return data, 200
 
 
 # GET ALL STUDENTS
 def get_all_students():
-    data = cache.get("admin_all_students")
-    if data is None:
-        students = Student.query.all()
-        data = [{
+    # data = cache.get("admin_all_students")
+    # if data is None:
+    students = Student.query.all()
+    data = [{
             "id": s.id,
             "name": s.name,
             "email": s.user.email if s.user else "N/A",
             "status": "Active" if s.user and s.user.active else "Blacklisted"
         } for s in students]
-        cache.set("admin_all_students", data, timeout=180)     # 3 mins
+        # cache.set("admin_all_students", data, timeout=180)     # 3 mins
     return data, 200
 
 
 # GET ALL COMPANIES
 def get_all_companies():
-    data = cache.get("admin_all_companies")
-    if data is None:
-        companies = Company.query.all()
-        data = [{
+    #data = cache.get("admin_all_companies")
+    # if data is None:
+    companies = Company.query.all()
+    data = [{
             "id": c.id,
             "company_name": c.company_name,
             "approval_status": c.approval_status,
             "hr_email": c.hr_email
         } for c in companies]
-        cache.set("admin_all_companies", data, timeout=180)    # 3 mins
+        # cache.set("admin_all_companies", data, timeout=180)    # 3 mins
     return data, 200
 
 
 # GET ALL DRIVES
 def get_all_drives():
-    data = cache.get("admin_all_drives")
-    if data is None:
-        drives = PlacementDrive.query.all()
-        data = [{
+    # data = cache.get("admin_all_drives")
+    # if data is None:
+    drives = PlacementDrive.query.all()
+    data = [{
             "id": d.id,
             "company": d.company.company_name,
             "job_title": d.job_title,
             "status": d.status,
             "deadline": d.application_deadline.strftime("%Y-%m-%d") if d.application_deadline else None
         } for d in drives]
-        cache.set("admin_all_drives", data, timeout=180)       # 3 mins
+        # cache.set("admin_all_drives", data, timeout=180)       # 3 mins
     return data, 200
 
 
 # GET ALL APPLICATIONS
 def get_all_applications():
-    data = cache.get("admin_all_applications")
-    if data is None:
-        applications = Application.query.order_by(Application.application_date.desc()).all()
-        data = [{
+    # data = cache.get("admin_all_applications")
+    # if data is None:
+    applications = Application.query.order_by(Application.application_date.desc()).all()
+    data = [{
             "id": a.id,
             "student_name": a.student.name if a.student else "N/A",
             "company": a.drive.company.company_name if a.drive and a.drive.company else "N/A",
@@ -273,7 +272,7 @@ def get_all_applications():
             "status": a.status,
             "applied_on": a.application_date.strftime("%Y-%m-%d") if a.application_date else None
         } for a in applications]
-        cache.set("admin_all_applications", data, timeout=120) # 2 mins
+        # cache.set("admin_all_applications", data, timeout=120) # 2 mins
     return data, 200
 
 
@@ -285,8 +284,8 @@ def approve_company(company_id):
     company.approval_status = "Approved"
     User.query.filter_by(id=company.user_id).update({"active": True})
     db.session.commit()
-    cache.delete("admin_all_companies")                        # ✅ clear
-    cache.delete("admin_dashboard_stats")                      # ✅ clear
+    # cache.delete("admin_all_companies")                        # ✅ clear
+    # cache.delete("admin_dashboard_stats")                      # ✅ clear
     return {"message": "Company approved"}, 200
 
 
@@ -298,8 +297,8 @@ def reject_company(company_id):
     company.approval_status = "Rejected"
     User.query.filter_by(id=company.user_id).update({"active": False})
     db.session.commit()
-    cache.delete("admin_all_companies")                       
-    cache.delete("admin_dashboard_stats")                      
+    # cache.delete("admin_all_companies")                       
+    # cache.delete("admin_dashboard_stats")                      
     return {"message": "Company rejected"}, 200
 
 
@@ -310,8 +309,8 @@ def approve_drive(drive_id):
         return {"message": "Drive not found"}, 404
     drive.status = "Approved"
     db.session.commit()
-    cache.delete("admin_all_drives")                           
-    cache.delete("student_approved_drives")                    
+    # cache.delete("admin_all_drives")                           
+    # cache.delete("student_approved_drives")                    
     return {"message": "Drive approved"}, 200
 
 
@@ -322,8 +321,8 @@ def reject_drive(drive_id):
         return {"message": "Drive not found"}, 404
     drive.status = "Rejected"
     db.session.commit()
-    cache.delete("admin_all_drives")                           
-    cache.delete("student_approved_drives")                    
+    # cache.delete("admin_all_drives")                           
+    # cache.delete("student_approved_drives")                    
     return {"message": "Drive rejected"}, 200
 
 
@@ -334,8 +333,8 @@ def deactivate_user(user_id):
         return {"message": "User not found"}, 404
     student.user.active = False
     db.session.commit()
-    cache.delete("admin_all_students")                         
-    cache.delete("admin_dashboard_stats")                      
+    # cache.delete("admin_all_students")                         
+    # cache.delete("admin_dashboard_stats")                      
     return {"message": "User blacklisted"}, 200
 
 
