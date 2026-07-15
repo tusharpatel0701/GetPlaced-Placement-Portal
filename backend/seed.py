@@ -57,7 +57,7 @@ def seed_data():
                 website=fake.url(),
                 hr_name=fake.name(),
                 hr_email=fake.email(),
-                hr_phone=fake.phone_number(),
+                hr_phone=f"{random.randint(6000000000, 9999999999)}",
                 approval_status=random.choice(["Pending", "Approved"]),
                 created_at=user.created_at
             )
@@ -85,11 +85,11 @@ def seed_data():
             student = Student(
                 user_id=user.id,
                 name=fake.name(),
-                roll_no=f"RN{random.randint(1000,9999)}",
+                roll_no=f"2026{fake.unique.random_int(min=1000, max=9999)}",
                 branch=random.choice(["CSE", "IT", "ECE", "ME"]),
                 cgpa=round(random.uniform(6.0, 9.8), 2),
                 year=random.randint(2, 4),
-                phone=fake.phone_number(),
+                phone=f"{random.randint(6000000000, 9999999999)}",
                 is_placed=False,
                 created_at=user.created_at
             )

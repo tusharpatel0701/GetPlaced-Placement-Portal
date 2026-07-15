@@ -1,6 +1,10 @@
 import os
 from urllib.parse import quote_plus
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -26,7 +30,26 @@ class BaseConfig:
 
 class LocalDevelopmentConfig(BaseConfig):
     # SQLALCHEMY_DATABASE_URI = "sqlite:///placement_portal.sqlite3"
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:Manish%23%402026@localhost/get_placed_db"
+    # SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:Manish%23%402026@localhost/get_placed_db"
+
+    DB_HOST = os.getenv("DB_HOST")
+    DB_PORT = os.getenv("DB_PORT")
+    DB_NAME = os.getenv("DB_NAME")
+    DB_USER = os.getenv("DB_USER")
+    DB_PASSWORD = quote_plus(os.getenv("DB_PASSWORD"))
+
+    SQLALCHEMY_DATABASE_URI = (
+        f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}"
+        f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    )
+
+    SQLALCHEMY_ENGINE_OPTIONS = {
+    "connect_args": {
+        "ssl": {
+            "ca": os.path.join(os.path.dirname(__file__), "ca.pem")
+        }
+    }
+    }
 
     SECRET_KEY = os.getenv("SECRET_KEY")
     SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT")
